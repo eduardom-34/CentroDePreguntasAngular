@@ -1,24 +1,24 @@
 <div class="flex flex-column">
   <span class="text-lg mb-4">Ingresar</span>
 
-  <mat-form-field>
-    <mat-label>Usuario</mat-label>
-    <input type="text" matInput placeholder="Username">
-  </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Contraseña</mat-label>
-    <input type="password" matInput placeholder="Password">
-  </mat-form-field>
+  <form [formGroup]="myForm" class="flex flex-column">
+    <mat-form-field>
+      <mat-label>Usuario</mat-label>
+      <input type="text" matInput placeholder="Username" formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Contraseña</mat-label>
+      <input type="password" matInput placeholder="Password" formControlName="password">
+    </mat-form-field>
+    <button mat-flat-button color="primary"
+    (click)="onLogin()">
+      Iniciar sesión
+    </button>
+  </form>
 
-  <button mat-flat-button color="primary"
-  (click)="onLogin()">
-    Iniciar sesión
-  </button>
 
   <div class="justify-content-end mt-4">
-    <a routerLink="/auth/register">¿aún no tienes una cuenta?</a>
+    <a routerLink="/auth/register">¿Aún no tienes una cuenta?</a>
   </div>
-
-
 </div>
