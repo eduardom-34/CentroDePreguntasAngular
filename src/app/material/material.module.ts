@@ -8,6 +8,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 
 
@@ -20,7 +22,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatIconModule,
     MatCardModule,
     MatChipsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule,
+    MatListModule
   ]
 })
 export class MaterialModule { }

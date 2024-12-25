@@ -5,6 +5,8 @@ import { User } from '../../interfaces/user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedService } from '../../../shared/shared.service';
 import { NewQuestion } from '../../interfaces/new-question.interface';
+import { Answer } from '../../interfaces/answers.interface';
+import { AnswerService } from '../../services/answer.service';
 
 @Component({
   selector: 'app-preguntas-page',
@@ -14,12 +16,14 @@ import { NewQuestion } from '../../interfaces/new-question.interface';
 export class PreguntasPageComponent implements OnInit {
 
   public questions : Question[] = [];
+  public answers: Answer[] = [];
   public user?: User;
   public myForm: FormGroup;
 
   constructor(
     private sharedService: SharedService,
     private questionService: QuestionService,
+    private answerService: AnswerService,
     private fb: FormBuilder
 
 
@@ -33,6 +37,8 @@ export class PreguntasPageComponent implements OnInit {
   ngOnInit(): void {
     this.questionService.getQuestions()
       .subscribe( questions => this.questions = questions )
+    this.answerService.getAnswers()
+      .subscribe( answers => this.answers = answers )
   }
 
   onPostQuestion(): void{

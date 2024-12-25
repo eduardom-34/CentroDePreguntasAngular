@@ -9,7 +9,7 @@
         <mat-label>Pregunta</mat-label>
         <input type="text" matInput placeholder="Username" formControlName="question">
       </mat-form-field>
-      
+
       <button mat-flat-button color="primary"
       (click)="onPostQuestion()">Preguntar
         </button>
@@ -20,16 +20,20 @@
   <div>
     <mat-card class="screen-size mt-2" appearance="outlined" *ngFor="let question of questions">
       <mat-card-header>
-        <mat-card-title>{{ question.userName }}</mat-card-title>
+        <mat-card-title class="text-sm">{{ question.userName }}</mat-card-title>
+        <mat-basic-chip class="p-2">{{ question.createdAt }}</mat-basic-chip>
       </mat-card-header>
-      <mat-card-content>
-        <p>{{ question.content }}</p>
+      <mat-card-content class="p-2">
+        <p class="text-lg"><strong>{{ question.content }}</strong></p>
       </mat-card-content>
-      <mat-card-footer class="example-card-footer">
-        <mat-chip-set aria-label="Chihuahua traits">
-          <mat-chip>{{ question.questionUserId }}</mat-chip>
-        </mat-chip-set>
-      </mat-card-footer>
+      <mat-card-content>
+        <p>Respuestas:</p>
+        <mat-list *ngFor="let answer of answers">
+          <strong>{{ answer.content }}</strong>
+          <mat-divider></mat-divider>
+        </mat-list>
+
+      </mat-card-content>
     </mat-card>
   </div>
 
