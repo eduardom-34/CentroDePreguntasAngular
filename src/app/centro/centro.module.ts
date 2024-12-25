@@ -5,6 +5,7 @@ import { CentroRoutingModule } from './centro-routing.module';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { CentroPageComponent } from './pages/centro-page/centro-page.component';
 import { PreguntasPageComponent } from './pages/preguntas-page/preguntas-page.component';
+import { MaterialModule } from '../material/material.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { PreguntasPageComponent } from './pages/preguntas-page/preguntas-page.co
   ],
   imports: [
     CommonModule,
-    CentroRoutingModule
+    CentroRoutingModule,
+    MaterialModule
   ]
 })
 export class CentroModule { }
