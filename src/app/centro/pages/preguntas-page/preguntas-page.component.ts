@@ -48,7 +48,10 @@ export class PreguntasPageComponent implements OnInit {
 
     this.questionService.postQuestion(newQuestion.content, newQuestion.userId).subscribe({
       next: (resp) => {
-        this.sharedService.showSnackbar("La pregunta se ha realizado", "Muy bien")
+        this.sharedService.showSnackbar("La pregunta se ha realizado", "Muy bien");
+        this.myForm.reset({
+          question: ''
+        });
       },
       error: (e) => {
         this.sharedService.showSnackbar("No se ha podido hacer la pregunta, intente otra vez", "Error");
