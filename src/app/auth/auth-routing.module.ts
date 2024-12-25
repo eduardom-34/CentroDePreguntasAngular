@@ -20,7 +20,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        component: LoginPageComponent
+        redirectTo: 'login'
       }
     ]
   }
