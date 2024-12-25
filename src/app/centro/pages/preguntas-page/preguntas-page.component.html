@@ -2,12 +2,13 @@
 
   <div class="flex flex-column">
 
-    <form [formGroup]="myForm" class="flex flex-column align-content-center">
+    <form [formGroup]="myForm" class="flex flex-column align-content-center screen-size">
       <span class="text-lg mb-4 mt-3">Hacer una pregunta</span>
 
-      <mat-form-field>
+      <mat-form-field class="example-full-width">
         <mat-label>Pregunta</mat-label>
-        <input type="text" matInput placeholder="pregunta" formControlName="question">
+        <textarea type="text" matInput placeholder="pregunta" formControlName="question"></textarea>
+        <!-- <input type="text" matInput placeholder="pregunta" formControlName="question"> -->
       </mat-form-field>
 
       <button mat-flat-button color="primary"
@@ -26,6 +27,12 @@
       <mat-card-content class="p-2">
         <p class="text-lg"><strong>{{ question.content }}</strong></p>
       </mat-card-content>
+
+      <mat-form-field class="answer-width">
+        <mat-label>Responder</mat-label>
+        <textarea matInput placeholder="Responder"></textarea>
+      </mat-form-field>
+
 
       <mat-card-content>
         <p>Respuestas:</p>
