@@ -8,9 +8,8 @@ import { CentroPageComponent } from './pages/centro-page/centro-page.component';
 
 @NgModule({
   declarations: [
-  
     LayoutPageComponent,
-       CentroPageComponent
+    CentroPageComponent
   ],
   imports: [
     CommonModule,
