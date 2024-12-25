@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Question } from '../interfaces/question.interface';
 import { environments } from '../../../environments/environments';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,13 @@ import { environments } from '../../../environments/environments';
 export class QuestionService {
   private baseUrl: string = environments.baseUrl;
 
-  constructor(private Http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getQuestions(): Observable<Question[]> {
-    return this.Http.get<Question[]>(`${this.baseUrl}/question`)
+    return this.http.get<Question[]>(`${this.baseUrl}/question`)
+  }
+
+  postQuestion(content: string, userId: number): Observable<number>{
+    return this.http.post<number>(`${this.baseUrl}/question`, {content, userId})
   }
 }

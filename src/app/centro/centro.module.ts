@@ -6,6 +6,8 @@ import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { CentroPageComponent } from './pages/centro-page/centro-page.component';
 import { PreguntasPageComponent } from './pages/preguntas-page/preguntas-page.component';
 import { MaterialModule } from '../material/material.module';
+import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import { MaterialModule } from '../material/material.module';
   imports: [
     CommonModule,
     CentroRoutingModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule,
   ]
 })
 export class CentroModule { }
