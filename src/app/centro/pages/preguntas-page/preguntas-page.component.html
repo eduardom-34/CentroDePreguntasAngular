@@ -27,7 +27,7 @@
         <p class="text-lg"><strong>{{ question.content }}</strong></p>
       </mat-card-content>
 
-      <mat-card-content class="answer-box">
+      <mat-card-content>
         <p>Respuestas:</p>
         <div *ngFor="let answer of answers" >
           <mat-list *ngIf="question.questionId == answer.questionId">
