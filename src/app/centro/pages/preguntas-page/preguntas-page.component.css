@@ -13,6 +13,11 @@
   flex-direction: column;
 }
 
+.answer-box {
+  flex: 1;
+  align-self: flex-start;
+}
+
 
 /* media queries */
 /* very small screens */

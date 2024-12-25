@@ -7,7 +7,7 @@
 
       <mat-form-field>
         <mat-label>Pregunta</mat-label>
-        <input type="text" matInput placeholder="Username" formControlName="question">
+        <input type="text" matInput placeholder="pregunta" formControlName="question">
       </mat-form-field>
 
       <button mat-flat-button color="primary"
@@ -26,14 +26,20 @@
       <mat-card-content class="p-2">
         <p class="text-lg"><strong>{{ question.content }}</strong></p>
       </mat-card-content>
-      <mat-card-content>
-        <p>Respuestas:</p>
-        <mat-list *ngFor="let answer of answers">
-          <strong>{{ answer.content }}</strong>
-          <mat-divider></mat-divider>
-        </mat-list>
 
+      <mat-card-content class="answer-box">
+        <p>Respuestas:</p>
+        <div *ngFor="let answer of answers" >
+          <mat-list *ngIf="question.questionId == answer.questionId">
+            <strong >
+              <div >{{ answer.content }}</div>
+              <mat-divider></mat-divider>
+            </strong>
+          </mat-list>
+        </div>
       </mat-card-content>
+
+
     </mat-card>
   </div>
 
