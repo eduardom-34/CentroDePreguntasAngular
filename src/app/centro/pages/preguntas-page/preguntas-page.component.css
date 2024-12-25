@@ -1,0 +1,35 @@
+.full-screen {
+  width: 100vw;
+  height: 100vh;
+  /* background-color: lightblue; */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+
+
+/* media queries */
+/* very small screens */
+@media (min-width: 0px) {
+  .screen-size {
+    width: 200px;
+  }
+}
+
+
+/* medium screens */
+@media (min-width: 410px) {
+  .screen-size {
+    width: 400px;
+  }
+}
+
+
+/* big screens */
+@media (min-width: 1024px) {
+  .screen-size {
+    width: 600px;
+  }
+}
