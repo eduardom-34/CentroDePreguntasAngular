@@ -38,11 +38,11 @@ export class PreguntasPageComponent implements OnInit {
   ) {
 
     this.myForm = this.fb.group({
-      question: ['', [Validators.required, Validators.minLength(3)]]
+      question: ['', [Validators.required, Validators.minLength(1)]]
     })
 
     this.myAnswerForm = this.fb.group({
-      answer: ['', [Validators.required, Validators.minLength(3)]]
+      answer: ['', [Validators.required, Validators.minLength(1)]]
     })
   }
 
