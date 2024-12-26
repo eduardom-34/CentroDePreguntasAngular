@@ -33,9 +33,9 @@ export class AuthService {
   checkAuthentication(): Observable<boolean>{
     if( !localStorage.getItem('token')) return of(false);
 
-    const token = localStorage.getItem('token');
+    const token: string | null = localStorage.getItem('token');
 
-    return this.http.get<Sesion>(`${this.baseUrl}/user/4`)
+    return this.http.post<Sesion>(`${this.baseUrl}/user/validate-token`, {token})
       .pipe(
         tap( user => this.user = user ),
         map( user => !!user ),

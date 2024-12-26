@@ -55,13 +55,6 @@ export class PreguntasPageComponent implements OnInit {
 
     this.answerService.getAnswers()
       .subscribe( answers => this.answers = answers )
-
-    // this.userService.getUserByToken()
-
-    //   const currentUser = this.authService.currentUser;
-
-    // this.userService.getByUserName(currentUser!.userName)
-    // .subscribe( user => this.user = user )
   }
 
 
@@ -76,7 +69,7 @@ export class PreguntasPageComponent implements OnInit {
       userId: 4
     }
 
-    const content: string = this.myForm.value.answer;
+    const content: string = this.myForm.get('question')?.value;
 
     this.questionService.postQuestion(content, newQuestion.userId).subscribe({
       next: (resp) => {
@@ -88,7 +81,7 @@ export class PreguntasPageComponent implements OnInit {
       error: (e) => {
         this.sharedService.showSnackbar("No se ha podido hacer la pregunta, intente otra vez", "Error");
       }
-    })
+    });
   }
 
   onPostAnswer(questionId: number): void{
@@ -97,9 +90,9 @@ export class PreguntasPageComponent implements OnInit {
       return;
     }
 
-    const content: string = this.myAnswerForm.value.answer;
+    const content: string = this.myAnswerForm.get('answer')?.value;
 
-    this.answerService.postAnswers(content, this.user!.userId, questionId).subscribe({
+    this.answerService.postAnswers(content, 4, questionId).subscribe({
       next: (resp) => {
         this.sharedService.showSnackbar("La respuesta se ha realizado", "Muy bien");
         this.myAnswerForm.reset({

@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { Error4040PageComponent } from './shared/pages/error4040-page/error4040-page.component';
+import { AuthGuard } from './auth/Guards/auth.guard';
+import { PublicGuard } from './auth/Guards/public.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule ),
+    canActivate: [ PublicGuard ],
+    canMatch: [ PublicGuard ]
   },
   {
     path: 'centro',
     loadChildren: () => import('./centro/centro.module').then(m => m.CentroModule ),
+    canActivate: [ AuthGuard ],
+    canMatch: [ AuthGuard ]
   },
   {
     path: '404',

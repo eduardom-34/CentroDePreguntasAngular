@@ -8,15 +8,35 @@
       <mat-form-field class="example-full-width">
         <mat-label>Pregunta</mat-label>
         <textarea type="text" matInput placeholder="pregunta" formControlName="question"></textarea>
-        <!-- <input type="text" matInput placeholder="pregunta" formControlName="question"> -->
       </mat-form-field>
 
       <button mat-flat-button color="primary"
       (click)="onPostQuestion()">Preguntar
         </button>
     </form>
-
   </div>
+
+  <div>
+    <h2>answer form</h2>
+    <code>
+      {{ myAnswerForm.value | json }}
+    </code>
+    <hr>
+    <p>
+      is form valid: {{ myAnswerForm.valid }}
+    </p>
+
+
+    <h2>quesion form</h2>
+    <code>
+      {{ myForm.value | json }}
+    </code>
+    <hr>
+    <p>
+      is form valid: {{ myForm.valid }}
+    </p>
+  </div>
+
 
   <h1 class="mt-4"><strong>Sección de preguntas</strong></h1>
 
