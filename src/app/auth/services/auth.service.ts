@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environments } from '../../../environments/environments';
-import { Observable, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { Sesion } from '../interfaces/sesion.interface';
+import { ReactiveFormsModule } from '@angular/forms';
+import { User } from '../../centro/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,19 @@ export class AuthService {
         tap( user => this.user = user ),
         tap( user => localStorage.setItem('token', user.token))
       );
+  }
+
+  checkAuthentication(): Observable<boolean>{
+    if( !localStorage.getItem('token')) return of(false);
+
+    const token = localStorage.getItem('token');
+
+    return this.http.get<Sesion>(`${this.baseUrl}/user/4`)
+      .pipe(
+        tap( user => this.user = user ),
+        map( user => !!user ),
+        catchError(err => of(false))
+      )
   }
 
   logout() {
