@@ -1,31 +1,33 @@
 <div class="flex flex-column">
   <span class="text-lg mb-4">Register</span>
+<form [formGroup]="myForm" class="flex flex-column">
 
-  <mat-form-field>
-    <mat-label>Primer nombre</mat-label>
-    <input type="text" matInput placeholder="Username">
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Primer nombre</mat-label>
+      <input type="text" matInput placeholder="First Name" formControlName="firstName">
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Segundo nombre</mat-label>
-    <input type="text" matInput placeholder="Username">
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Primer apellido</mat-label>
+      <input type="text" matInput placeholder="Last Name" formControlName="lastName">
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Usuario</mat-label>
-    <input type="text" matInput placeholder="Username">
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Usuario</mat-label>
+      <input type="text" matInput placeholder="Username" formControlName="userName">
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Contraseña</mat-label>
-    <input type="text" matInput placeholder="Password">
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Contraseña</mat-label>
+      <input type="text" matInput placeholder="Password" formControlName="password">
+    </mat-form-field>
 
-  <button mat-flat-button color="primary">Registrarse</button>
+    <button mat-flat-button color="primary"
+    (click)="onRegister()">Registrarse</button>
+
+</form>
 
   <div class="justify-content-end mt-4">
     <a routerLink="/auth/login">Ya tengo una cuenta</a>
   </div>
-
-
 </div>
