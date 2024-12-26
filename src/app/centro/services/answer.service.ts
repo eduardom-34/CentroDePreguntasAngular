@@ -15,4 +15,8 @@ export class AnswerService {
   getAnswers(): Observable<Answer[]>{
     return this.http.get<Answer[]>(`${this.baseUrl}/answer`)
   }
+
+  postAnswers(content: string, userId: number, questionId: number): Observable<number>{
+    return this.http.post<number>(`${this.baseUrl}/answer`, {content, userId, questionId})
+  }
 }

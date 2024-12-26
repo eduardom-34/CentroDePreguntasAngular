@@ -18,6 +18,8 @@
 
   </div>
 
+  <h1 class="mt-4"><strong>Sección de preguntas</strong></h1>
+
   <div>
     <mat-card class="screen-size mt-2" appearance="outlined" *ngFor="let question of questions">
       <mat-card-header>
@@ -28,10 +30,20 @@
         <p class="text-lg"><strong>{{ question.content }}</strong></p>
       </mat-card-content>
 
-      <mat-form-field class="answer-width">
-        <mat-label>Responder</mat-label>
-        <textarea matInput placeholder="Responder"></textarea>
-      </mat-form-field>
+      <mat-divider></mat-divider>
+
+
+      <form [formGroup]="myAnswerForm" class="flex flex-column align-content-center ">
+        <mat-form-field class="answer-width mt-5">
+          <mat-label>Responder</mat-label>
+          <textarea matInput placeholder="Responder" formControlName="answer"></textarea>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary"
+        class="answer-width"
+      (click)="onPostAnswer()">Responder
+        </button>
+      </form>
 
 
       <mat-card-content>

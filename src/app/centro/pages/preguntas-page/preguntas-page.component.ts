@@ -7,6 +7,7 @@ import { SharedService } from '../../../shared/shared.service';
 import { NewQuestion } from '../../interfaces/new-question.interface';
 import { Answer } from '../../interfaces/answers.interface';
 import { AnswerService } from '../../services/answer.service';
+import { NewAnswer } from '../../interfaces/new-answer.interface';
 
 @Component({
   selector: 'app-preguntas-page',
@@ -19,6 +20,7 @@ export class PreguntasPageComponent implements OnInit {
   public answers: Answer[] = [];
   public user?: User;
   public myForm: FormGroup;
+  public myAnswerForm: FormGroup;
 
   constructor(
     private sharedService: SharedService,
@@ -29,8 +31,13 @@ export class PreguntasPageComponent implements OnInit {
 
 
   ) {
+
     this.myForm = this.fb.group({
       question: ['', [Validators.required, Validators.minLength(3)]]
+    })
+
+    this.myAnswerForm = this.fb.group({
+      answer: ['', [Validators.required, Validators.minLength(3)]]
     })
   }
 
@@ -63,6 +70,32 @@ export class PreguntasPageComponent implements OnInit {
         this.sharedService.showSnackbar("No se ha podido hacer la pregunta, intente otra vez", "Error");
       }
     })
+  }
+
+  onPostAnswer(): void{
+    if (this.myAnswerForm.invalid) {
+      this.sharedService.showSnackbar("Por favor, escribe una respuesta", "Error");
+      return;
+    }
+
+    const newAnswer: NewAnswer = {
+      content: this.myAnswerForm.value.answer,
+      userId: 4,
+      questionId: 21
+    }
+
+    this.answerService.postAnswers(newAnswer.content, newAnswer.userId, newAnswer.questionId).subscribe({
+      next: (resp) => {
+        this.sharedService.showSnackbar("La respuesta se ha realizado", "Muy bien");
+        this.myAnswerForm.reset({
+          answer: ''
+        });
+      },
+      error: (e) => {
+        this.sharedService.showSnackbar("No se ha podido hacer la respuesta, intente otra vez", "Error");
+      }
+    })
+
   }
 
 }
