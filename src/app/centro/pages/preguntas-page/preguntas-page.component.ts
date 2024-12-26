@@ -8,6 +8,8 @@ import { NewQuestion } from '../../interfaces/new-question.interface';
 import { Answer } from '../../interfaces/answers.interface';
 import { AnswerService } from '../../services/answer.service';
 import { NewAnswer } from '../../interfaces/new-answer.interface';
+import { AuthService } from '../../../auth/services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-preguntas-page',
@@ -21,15 +23,16 @@ export class PreguntasPageComponent implements OnInit {
   public user?: User;
   public myForm: FormGroup;
   public myAnswerForm: FormGroup;
+  public token!: string;
+
 
   constructor(
     private sharedService: SharedService,
     private questionService: QuestionService,
     private answerService: AnswerService,
-    private fb: FormBuilder
-
-
-
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private userService: UserService
   ) {
 
     this.myForm = this.fb.group({
@@ -41,12 +44,26 @@ export class PreguntasPageComponent implements OnInit {
     })
   }
 
+
+
   ngOnInit(): void {
+    const currentUser = this.authService.currentUser;
+
+
     this.questionService.getQuestions()
       .subscribe( questions => this.questions = questions )
+
     this.answerService.getAnswers()
       .subscribe( answers => this.answers = answers )
+
+    // this.userService.getUserByToken()
+
+    //   const currentUser = this.authService.currentUser;
+
+    // this.userService.getByUserName(currentUser!.userName)
+    // .subscribe( user => this.user = user )
   }
+
 
   onPostQuestion(): void{
     if (this.myForm.invalid) {
@@ -59,7 +76,9 @@ export class PreguntasPageComponent implements OnInit {
       userId: 4
     }
 
-    this.questionService.postQuestion(newQuestion.content, newQuestion.userId).subscribe({
+    const content: string = this.myForm.value.answer;
+
+    this.questionService.postQuestion(content, newQuestion.userId).subscribe({
       next: (resp) => {
         this.sharedService.showSnackbar("La pregunta se ha realizado", "Muy bien");
         this.myForm.reset({
@@ -72,19 +91,15 @@ export class PreguntasPageComponent implements OnInit {
     })
   }
 
-  onPostAnswer(): void{
+  onPostAnswer(questionId: number): void{
     if (this.myAnswerForm.invalid) {
       this.sharedService.showSnackbar("Por favor, escribe una respuesta", "Error");
       return;
     }
 
-    const newAnswer: NewAnswer = {
-      content: this.myAnswerForm.value.answer,
-      userId: 4,
-      questionId: 21
-    }
+    const content: string = this.myAnswerForm.value.answer;
 
-    this.answerService.postAnswers(newAnswer.content, newAnswer.userId, newAnswer.questionId).subscribe({
+    this.answerService.postAnswers(content, this.user!.userId, questionId).subscribe({
       next: (resp) => {
         this.sharedService.showSnackbar("La respuesta se ha realizado", "Muy bien");
         this.myAnswerForm.reset({
