@@ -110,4 +110,8 @@ export class PreguntasPageComponent implements OnInit {
 
   }
 
+  onCloseQuestion(questionId: number): void {
+
+  }
+
 }

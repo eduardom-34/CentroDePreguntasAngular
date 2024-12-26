@@ -22,8 +22,15 @@
   <div>
     <mat-card class="screen-size mt-2" appearance="outlined" *ngFor="let question of questions">
       <mat-card-header>
-        <mat-card-title class="text-sm">{{ question.userName }}</mat-card-title>
-        <!-- <mat-basic-chip class="p-2">{{ question.createdAt }}</mat-basic-chip> -->
+        <div class="flex justify-content-between align-items-center w-full">
+          <mat-card-title class="text-sm">{{ question.userName }}</mat-card-title>
+          <div class="flex align-items-center">
+            <span class="mr-2">Cerrar pregunta</span>
+            <button mat-icon-button color="warn" aria-label="Cerrar pregunta" (click)="onCloseQuestion(question.questionId)">
+              <mat-icon>lock</mat-icon>
+            </button>
+          </div>
+        </div>
       </mat-card-header>
       <mat-card-content class="p-2">
         <p class="text-lg"><strong>{{ question.content }}</strong></p>
