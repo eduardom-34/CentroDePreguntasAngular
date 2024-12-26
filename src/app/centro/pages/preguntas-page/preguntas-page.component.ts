@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Question } from '../../interfaces/question.interface';
 import { QuestionService } from '../../services/question.service';
-import { User } from '../../interfaces/user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedService } from '../../../shared/shared.service';
 import { NewQuestion } from '../../interfaces/new-question.interface';
@@ -10,6 +9,8 @@ import { AnswerService } from '../../services/answer.service';
 import { NewAnswer } from '../../interfaces/new-answer.interface';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UserService } from '../../services/user.service';
+import { Sesion } from '../../../auth/interfaces/sesion.interface';
+import { User } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-preguntas-page',
@@ -20,10 +21,11 @@ export class PreguntasPageComponent implements OnInit {
 
   public questions : Question[] = [];
   public answers: Answer[] = [];
-  public user?: User;
   public myForm: FormGroup;
   public myAnswerForm: FormGroup;
-  public token!: string;
+  public token: string = '';
+  public user!: User;
+  public sesion!: Sesion;
 
 
   constructor(
@@ -47,14 +49,21 @@ export class PreguntasPageComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const currentUser = this.authService.currentUser;
 
 
     this.questionService.getQuestions()
-      .subscribe( questions => this.questions = questions )
+    .subscribe( questions => this.questions = questions )
 
     this.answerService.getAnswers()
-      .subscribe( answers => this.answers = answers )
+    .subscribe( answers => this.answers = answers )
+
+    const currentUser = this.authService.currentUser;
+
+    currentUser === undefined ? null : this.sesion = currentUser;
+
+    this.userService.getByUserName(this.sesion.userName)
+    .subscribe( user => this.user = user )
+
   }
 
 
@@ -64,14 +73,9 @@ export class PreguntasPageComponent implements OnInit {
       return;
     }
 
-    const newQuestion: NewQuestion = {
-      content: this.myForm.value.question,
-      userId: 4
-    }
-
     const content: string = this.myForm.get('question')?.value;
 
-    this.questionService.postQuestion(content, newQuestion.userId).subscribe({
+    this.questionService.postQuestion(content, this.user.userId).subscribe({
       next: (resp) => {
         this.sharedService.showSnackbar("La pregunta se ha realizado", "Muy bien");
         this.myForm.reset({
@@ -92,7 +96,7 @@ export class PreguntasPageComponent implements OnInit {
 
     const content: string = this.myAnswerForm.get('answer')?.value;
 
-    this.answerService.postAnswers(content, 4, questionId).subscribe({
+    this.answerService.postAnswers(content, this.user.userId, questionId).subscribe({
       next: (resp) => {
         this.sharedService.showSnackbar("La respuesta se ha realizado", "Muy bien");
         this.myAnswerForm.reset({
