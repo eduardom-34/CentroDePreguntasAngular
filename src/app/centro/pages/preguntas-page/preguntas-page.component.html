@@ -16,27 +16,6 @@
     </form>
   </div>
 
-  <div>
-    <h2>answer form</h2>
-    <code>
-      {{ myAnswerForm.value | json }}
-    </code>
-    <hr>
-    <p>
-      is form valid: {{ myAnswerForm.valid }}
-    </p>
-
-
-    <h2>quesion form</h2>
-    <code>
-      {{ myForm.value | json }}
-    </code>
-    <hr>
-    <p>
-      is form valid: {{ myForm.valid }}
-    </p>
-  </div>
-
 
   <h1 class="mt-4"><strong>Sección de preguntas</strong></h1>
 
@@ -44,7 +23,7 @@
     <mat-card class="screen-size mt-2" appearance="outlined" *ngFor="let question of questions">
       <mat-card-header>
         <mat-card-title class="text-sm">{{ question.userName }}</mat-card-title>
-        <mat-basic-chip class="p-2">{{ question.createdAt }}</mat-basic-chip>
+        <!-- <mat-basic-chip class="p-2">{{ question.createdAt }}</mat-basic-chip> -->
       </mat-card-header>
       <mat-card-content class="p-2">
         <p class="text-lg"><strong>{{ question.content }}</strong></p>
