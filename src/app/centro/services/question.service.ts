@@ -22,6 +22,6 @@ export class QuestionService {
   }
 
   closeQuestion(questionId: number): Observable<number>{
-    return this.http.put<number>(`${this.baseUrl}/question/${questionId}`, {})
+    return this.http.patch<number>(`${this.baseUrl}/question/${questionId}`, {})
   }
 }
