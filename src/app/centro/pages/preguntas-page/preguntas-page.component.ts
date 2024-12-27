@@ -26,6 +26,7 @@ export class PreguntasPageComponent implements OnInit {
   public token: string = '';
   public user!: User;
   public sesion!: Sesion;
+  public isLoading: boolean = false;
 
   constructor(
     private sharedService: SharedService,
@@ -69,30 +70,40 @@ export class PreguntasPageComponent implements OnInit {
 
 
   loadQuestions() {
+    this.isLoading = true;
+
     this.questionService.getQuestions().subscribe({
       next: (data) => {
         this.questions = data;
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error al cargar las preguntas:', err);
+        this.isLoading = false;
       }
     });
   }
 
   loadAnswers() {
+    this.isLoading = true;
     this.answerService.getAnswers().subscribe({
       next: (data) => {
         this.answers = data;
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error al cargar las preguntas:', err);
+        this.isLoading = false;
       }
     });
   }
 
 
   onSwitchQuestionStatus(isClose: boolean): string{
-    return isClose === true ? "Cerrada" : "Abierta";
+    this.isLoading = true;
+    const status = isClose === true ? "Cerrada" :  "Abierta";
+    this.isLoading = false;
+    return status;
   }
 
   onPostQuestion(): void{
@@ -100,6 +111,8 @@ export class PreguntasPageComponent implements OnInit {
       this.sharedService.showSnackbar("Por favor, escribe una pregunta", "Error");
       return;
     }
+
+    this.isLoading = true;
 
     const content: string = this.myForm.get('question')?.value;
 
@@ -110,9 +123,11 @@ export class PreguntasPageComponent implements OnInit {
           question: ''
         });
         this.loadQuestions();
+        this.isLoading = false;
       },
       error: (e) => {
         this.sharedService.showSnackbar("No se ha podido hacer la pregunta, intente otra vez", "Error");
+        this.isLoading = false;
       }
     });
   }
@@ -123,6 +138,8 @@ export class PreguntasPageComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
+
     const content: string = this.myAnswerForm.get('answer')?.value;
 
     this.answerService.postAnswers(content, this.user.userId, questionId).subscribe({
@@ -132,23 +149,28 @@ export class PreguntasPageComponent implements OnInit {
           answer: ''
         });
         this.loadAnswers();
+        this.isLoading = false;
       },
       error: (e) => {
         this.sharedService.showSnackbar("No se ha podido hacer la respuesta, intente otra vez", "Error");
+        this.isLoading = false;
       }
     })
 
   }
 
   onCloseQuestion(questionId: number): void {
+    this.isLoading = true;
     this.questionService.closeQuestion(questionId).subscribe({
       next: (resp) => {
         this.sharedService.showSnackbar("La pregunta ha sido cerrada", "Muy bien");
         this.loadQuestions();
+        this.isLoading = false;
       },
 
       error: (e) => {
         this.sharedService.showSnackbar("No se ha podido cerrar la pregunta, intente otra vez", "Error");
+        this.isLoading = false;
       }
     });
   }

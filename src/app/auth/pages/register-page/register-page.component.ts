@@ -14,6 +14,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 export class RegisterPageComponent implements OnInit{
 
   public myForm: FormGroup;
+  public isLoading: boolean = true;
 
 
   constructor(
@@ -46,14 +47,18 @@ export class RegisterPageComponent implements OnInit{
       password: this.myForm.value.password,
     }
 
+    this.isLoading = true;
+
     this.authService.register(register.firstName, register.lastName, register.userName, register.password)
     .subscribe({
       next: (resp) => {
         this.router.navigate(['/centro']);
         this.sharedService.showSnackbar("Cuenta creada", "Bienvenido");
+        this.isLoading = false;
       },
       error: (e) => {
         this.sharedService.showSnackbar(e.error[0], "error");
+        this.isLoading = false;
       }
     })
   }

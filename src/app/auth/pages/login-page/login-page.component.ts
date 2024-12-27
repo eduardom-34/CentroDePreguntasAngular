@@ -28,12 +28,12 @@ export class LoginPageComponent {
   }
 
   onLogin() {
+    this.isLoading = true;
     if (this.myForm.invalid) {
       this.sharedService.showSnackbar("Por favor ingrese sus credenciales", "Error");
       return;
     }
 
-    this.isLoading = true;
 
     const request: Login = {
       username: this.myForm.value.username,

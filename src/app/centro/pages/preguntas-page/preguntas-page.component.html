@@ -1,5 +1,6 @@
 <div class="full-screen flex flex-column align-content-center">
 
+  <shared-loading-spinner *ngIf="isLoading"></shared-loading-spinner>
   <div class="flex flex-column">
 
     <form [formGroup]="myForm" class="flex flex-column align-content-center screen-size">
