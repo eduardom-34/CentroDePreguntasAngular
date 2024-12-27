@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanMatch, GuardResult, MaybeAsync, Route, Router, RouterStateSnapshot, UrlSegment } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Observable, tap } from 'rxjs';
+import { SharedService } from '../../shared/shared.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanMatch, CanActivate {
 
   constructor( private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) { }
 
   private checkAuthStatus(): boolean | Observable<boolean> {
@@ -18,6 +20,7 @@ export class AuthGuard implements CanMatch, CanActivate {
       tap( isAuthenticated => {
         if( !isAuthenticated ) {
           this.router.navigate(['auth/login']);
+          this.sharedService.showSnackbar("La sesión ha caducado", "Error");
         }
       }),
     )

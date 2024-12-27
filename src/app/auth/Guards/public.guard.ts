@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanMatch, GuardResult, MaybeAsync, Route, Router, RouterStateSnapshot, UrlSegment } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { map, Observable, tap } from 'rxjs';
+import { SharedService } from '../../shared/shared.service';
 
 @Injectable({providedIn: 'root'})
 export class PublicGuard implements CanMatch, CanActivate {
