@@ -27,7 +27,6 @@ export class PreguntasPageComponent implements OnInit {
   public user!: User;
   public sesion!: Sesion;
 
-
   constructor(
     private sharedService: SharedService,
     private questionService: QuestionService,
@@ -66,6 +65,11 @@ export class PreguntasPageComponent implements OnInit {
 
   }
 
+
+
+  onSwitchQuestionStatus(isClose: boolean): string{
+    return isClose === true ? "Cerrada" : "Abierta";
+  }
 
   onPostQuestion(): void{
     if (this.myForm.invalid) {
@@ -111,7 +115,14 @@ export class PreguntasPageComponent implements OnInit {
   }
 
   onCloseQuestion(questionId: number): void {
-
+    this.questionService.closeQuestion(questionId).subscribe({
+      next: (resp) => {
+        this.sharedService.showSnackbar("La pregunta ha sido cerrada", "Muy bien");
+      },
+      error: (e) => {
+        this.sharedService.showSnackbar("No se ha podido cerrar la pregunta, intente otra vez", "Error");
+      }
+    });
   }
 
 }

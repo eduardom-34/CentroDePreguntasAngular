@@ -19,15 +19,20 @@
 
   <h1 class="mt-4"><strong>Sección de preguntas</strong></h1>
 
+
   <div>
     <mat-card class="screen-size mt-2 p-4" appearance="outlined" *ngFor="let question of questions">
+
+      <mat-card-header class="text-lg align-self-center">La pregunta está: {{ onSwitchQuestionStatus(question.isClosed) }}</mat-card-header>
 
       <mat-card-header>
         <div class="flex justify-content-between align-items-center w-full">
           <mat-card-title class="text-sm">Usuario: {{ question.userName }}</mat-card-title>
-          <div class="flex align-items-center">
-            <button mat-flat-button class="link-button p-2" (click)="onCloseQuestion(question.questionId)">
-              Cerrar pregunta
+          <div class="flex align-items-center" *ngIf="question.isClosed === false">
+            <button mat-flat-button class="link-button p-2"
+            *ngIf="question.questionUserId === user?.userId"
+            (click)="onCloseQuestion(question.questionId)">
+            Cerrar pregunta
             </button>
           </div>
         </div>
@@ -40,7 +45,7 @@
       <mat-divider></mat-divider>
 
 
-      <form [formGroup]="myAnswerForm" class="flex flex-column align-content-center ">
+      <form [formGroup]="myAnswerForm" class="flex flex-column align-content-center" *ngIf="question.isClosed == false">
         <mat-form-field class="answer-width mt-5">
           <mat-label>Responder</mat-label>
           <textarea matInput placeholder="Responder" formControlName="answer"></textarea>
@@ -57,10 +62,10 @@
         <p class="text-sm font-bold mt-3">Respuestas:</p>
         <div *ngFor="let answer of answers" class="ml-4 mt-2">
           <mat-list *ngIf="question.questionId == answer.questionId">
-            <strong class="text-sm">
+            <strong class="">
               <div>
-                <p>usuario: {{ answer.userName }}</p>
-                <p>{{ answer.content }}</p>
+                <mat-card-actions>usuario: {{ answer.userName }}</mat-card-actions>
+                <mat-card-content class="text-lg">{{ answer.content }}</mat-card-content>
               </div>
               <mat-divider></mat-divider>
             </strong>

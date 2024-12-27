@@ -20,4 +20,8 @@ export class QuestionService {
   postQuestion(content: string, userId: number): Observable<number>{
     return this.http.post<number>(`${this.baseUrl}/question`, {content, userId})
   }
+
+  closeQuestion(questionId: number): Observable<number>{
+    return this.http.put<number>(`${this.baseUrl}/question/${questionId}`, {})
+  }
 }
