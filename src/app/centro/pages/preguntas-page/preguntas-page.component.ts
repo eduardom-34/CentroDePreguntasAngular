@@ -50,6 +50,8 @@ export class PreguntasPageComponent implements OnInit {
   ngOnInit(): void {
 
 
+    this.loadQuestions();
+
     this.questionService.getQuestions()
     .subscribe( questions => this.questions = questions )
 
@@ -65,6 +67,28 @@ export class PreguntasPageComponent implements OnInit {
 
   }
 
+
+  loadQuestions() {
+    this.questionService.getQuestions().subscribe({
+      next: (data) => {
+        this.questions = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar las preguntas:', err);
+      }
+    });
+  }
+
+  loadAnswers() {
+    this.answerService.getAnswers().subscribe({
+      next: (data) => {
+        this.answers = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar las preguntas:', err);
+      }
+    });
+  }
 
 
   onSwitchQuestionStatus(isClose: boolean): string{
@@ -85,6 +109,7 @@ export class PreguntasPageComponent implements OnInit {
         this.myForm.reset({
           question: ''
         });
+        this.loadQuestions();
       },
       error: (e) => {
         this.sharedService.showSnackbar("No se ha podido hacer la pregunta, intente otra vez", "Error");
@@ -106,6 +131,7 @@ export class PreguntasPageComponent implements OnInit {
         this.myAnswerForm.reset({
           answer: ''
         });
+        this.loadAnswers();
       },
       error: (e) => {
         this.sharedService.showSnackbar("No se ha podido hacer la respuesta, intente otra vez", "Error");
@@ -118,11 +144,18 @@ export class PreguntasPageComponent implements OnInit {
     this.questionService.closeQuestion(questionId).subscribe({
       next: (resp) => {
         this.sharedService.showSnackbar("La pregunta ha sido cerrada", "Muy bien");
+        this.loadQuestions();
       },
+
       error: (e) => {
         this.sharedService.showSnackbar("No se ha podido cerrar la pregunta, intente otra vez", "Error");
       }
     });
+  }
+
+  onUpdateData() {
+    this.loadQuestions();
+    this.loadAnswers();
   }
 
 }
