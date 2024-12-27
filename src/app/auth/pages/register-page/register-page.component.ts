@@ -53,8 +53,7 @@ export class RegisterPageComponent implements OnInit{
         this.sharedService.showSnackbar("Cuenta creada", "Bienvenido");
       },
       error: (e) => {
-        this.sharedService.showSnackbar(e.error[0], "error")
-        console.log(e)
+        this.sharedService.showSnackbar(e.error[0], "error");
       }
     })
   }
