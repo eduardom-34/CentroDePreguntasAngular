@@ -14,7 +14,6 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 export class RegisterPageComponent implements OnInit{
 
   public myForm: FormGroup;
-  userNameValid: boolean | null = null;
 
 
   constructor(
@@ -25,10 +24,10 @@ export class RegisterPageComponent implements OnInit{
   ) {
 
     this.myForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      userName: ['', Validators.required, Validators.maxLength(50)],
-      password: ['', Validators.required]
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      userName: ['', [Validators.required, Validators.maxLength(50)]],
+      password: ['', [Validators.required]]
     })
   }
   ngOnInit(): void {
@@ -52,6 +51,10 @@ export class RegisterPageComponent implements OnInit{
       next: (resp) => {
         this.router.navigate(['/centro']);
         this.sharedService.showSnackbar("Cuenta creada", "Bienvenido");
+      },
+      error: (e) => {
+        this.sharedService.showSnackbar(e.error[0], "error")
+        console.log(e)
       }
     })
   }
