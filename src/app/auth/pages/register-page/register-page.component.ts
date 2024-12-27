@@ -4,15 +4,18 @@ import { AuthService } from '../../services/auth.service';
 import { Register } from '../../interfaces/register.interface';
 import { Router } from '@angular/router';
 import { SharedService } from '../../../shared/shared.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css'
 })
-export class RegisterPageComponent {
+export class RegisterPageComponent implements OnInit{
 
   public myForm: FormGroup;
+  userNameValid: boolean | null = null;
+
 
   constructor(
     private fb: FormBuilder,
@@ -24,9 +27,11 @@ export class RegisterPageComponent {
     this.myForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      userName: ['', Validators.required],
+      userName: ['', Validators.required, Validators.maxLength(50)],
       password: ['', Validators.required]
     })
+  }
+  ngOnInit(): void {
   }
 
   onRegister() {
@@ -50,5 +55,9 @@ export class RegisterPageComponent {
       }
     })
   }
+
+
+
+
 
 }

@@ -56,4 +56,8 @@ export class AuthService {
       )
   }
 
+  checkUserName(userName: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/user/check/username/${userName}`)
+  }
+
 }
