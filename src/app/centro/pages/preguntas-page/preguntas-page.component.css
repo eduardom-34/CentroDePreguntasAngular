@@ -17,6 +17,12 @@
   width: 80%;
 }
 
+.link-button {
+  background: rgb(189, 0, 0);
+  color: white;
+  border-radius: 1rem;
+}
+
 
 /* media queries */
 /* very small screens */
